@@ -1,0 +1,67 @@
+[
+  {
+    "sensor_id": "P001",
+    "tipo": "sensor_pressao",
+    "localizacao": "Compressor_Principal",
+    "medicoes": [
+      {
+        "timestamp": "2025-06-11T10:00:00Z",
+        "valor": 6.8,
+        "unidade": "bar"
+      }
+    ]
+  },
+  {
+    "sensor_id": "P002",
+    "tipo": "sensor_pressao",
+    "localizacao": "Linha_Entrada_Tanque",
+    "medicoes": [
+      {
+        "timestamp": "2025-06-11T10:05:00Z",
+        "valor": 7.2,
+        "unidade": "bar"
+      }
+    ]
+  },
+  {
+    "sensor_id": "P003",
+    "tipo": "sensor_pressao",
+    "localizacao": "Valvula_Saida",
+    "medicoes": [
+      {
+        "timestamp": "2025-06-11T10:10:00Z",
+        "valor": 5.5,
+        "unidade": "bar"
+      },
+      {
+        "timestamp": "2025-06-11T10:15:00Z",
+        "valor": 5.7,
+        "unidade": "bar"
+      }
+    ]
+  },
+  {
+    "sensor_id": "T001",
+    "tipo": "sensor_temperatura",
+    "localizacao": "Cilindro_Pneumatico",
+    "medicoes": [
+      {
+        "timestamp": "2025-06-11T10:00:00Z",
+        "valor": 38.5,
+        "unidade": "°C"
+      }
+    ]
+  },
+  {
+    "sensor_id": "F001",
+    "tipo": "sensor_fluxo",
+    "localizacao": "Linha_Distribuicao_A",
+    "medicoes": [
+      {
+        "timestamp": "2025-06-11T10:00:00Z",
+        "valor": 12.3,
+        "unidade": "L/min"
+      }
+    ]
+  }
+]
