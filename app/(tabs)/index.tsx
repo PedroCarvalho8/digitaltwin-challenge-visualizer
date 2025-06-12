@@ -73,7 +73,9 @@ export default function TabOneScreen() {
           </View>
         ) : (
           sensores.map((item) => {
-            const ultimaMedicao = item.medicoes[item.medicoes.length - 1];
+            const ultimaMedicao = item.medicoes.reduce((max, atual) => {
+              return new Date(atual.timestamp) > new Date(max.timestamp) ? atual : max;
+            }, item.medicoes[0]);
 
             return (
               <TouchableOpacity
