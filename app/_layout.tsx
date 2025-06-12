@@ -53,7 +53,7 @@ function RootLayoutNav() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <DataSourceProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <ThemeProvider value={colorScheme === 'light' ? DefaultTheme : DarkTheme}>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="modal" options={{ presentation: 'modal' }} />

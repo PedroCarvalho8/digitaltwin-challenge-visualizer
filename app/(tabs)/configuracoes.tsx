@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -11,7 +11,7 @@ import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import { useDataSource, Fonte } from '@/contexts/DataSourceContext';
 
-export default function TabTwoScreen() {
+export default function ConfiguracoesScreen() {
   const { fonte, apiUrl, setFonte, setApiUrl } = useDataSource();
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? 'light'];
@@ -49,6 +49,9 @@ export default function TabTwoScreen() {
       if (!response.ok) throw new Error(`Erro na resposta: ${response.status}`);
     } catch (error: any) {
       setErrorMessage(error.message || 'Erro desconhecido ao testar a fonte');
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 4000)
     }
   };
 

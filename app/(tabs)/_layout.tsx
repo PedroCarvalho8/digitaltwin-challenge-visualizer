@@ -25,14 +25,14 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true)
       }}>
       <Tabs.Screen
-        name="index"
+        name="inicio"
         options={{
           title: 'Início',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="configuracoes"
         options={{
           title: 'Configurações',
           tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,

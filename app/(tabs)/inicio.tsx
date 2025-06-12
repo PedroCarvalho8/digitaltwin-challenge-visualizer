@@ -8,7 +8,21 @@ import { Reading } from '@/models/sensor';
 import { useDataSource } from '@/contexts/DataSourceContext';
 import { useRouter } from 'expo-router';
 
-export default function TabOneScreen() {
+const sensorNamesMap: Record<string, string> = {
+  P: 'Pressão',
+  F: 'Fluxo',
+  T: 'Temperatura',
+};
+
+function getSensorName(sensorId: string): string {
+  if (!sensorId || sensorId.length === 0) return 'Sensor Desconhecido';
+  const letra = sensorId.charAt(0).toUpperCase();
+  const nome = sensorNamesMap[letra] ?? 'Sensor Desconhecido';
+  const numero = sensorId.slice(1);
+  return `${nome} ${numero}`;
+}
+
+export default function InicioScreen() {
   const [leituras, setLeituras] = useState<Reading[]>([]);
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? 'light'];
@@ -84,7 +98,7 @@ export default function TabOneScreen() {
                   style={styles.icon}
                 />
                 <Text style={[styles.sensorTitle, { color: theme.text }]}>
-                  Sensor: {item.sensorId}
+                  {getSensorName(item.sensorId)}
                 </Text>
               </RNView>
 
