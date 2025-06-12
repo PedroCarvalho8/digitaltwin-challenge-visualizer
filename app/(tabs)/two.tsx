@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
-import { useDataSource, fonte } from '@/contexts/DataSourceContext';
+import { useDataSource, Fonte } from '@/contexts/DataSourceContext';
 
 export default function TabTwoScreen() {
   const { fonte, apiUrl, setFonte, setApiUrl } = useDataSource();
@@ -18,9 +18,9 @@ export default function TabTwoScreen() {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const fontes: fonte[] = ['mock', 'api', 'localhost'];
+  const fontes: Fonte[] = ['mock', 'api', 'localhost'];
 
-  const getDisplayName = (fonte: fonte) => {
+  const getDisplayName = (fonte: Fonte) => {
     switch (fonte) {
       case 'mock':
         return 'Mock (dados locais)';
@@ -33,7 +33,7 @@ export default function TabTwoScreen() {
     }
   };
 
-  const testarFonte = async (novaFonte: fonte, url?: string) => {
+  const testarFonte = async (novaFonte: Fonte, url?: string) => {
     setErrorMessage(null);
     try {
       let testUrl = '';
@@ -52,7 +52,7 @@ export default function TabTwoScreen() {
     }
   };
 
-  const handleSetFonte = async (novaFonte: fonte) => {
+  const handleSetFonte = async (novaFonte: Fonte) => {
     setFonte(novaFonte);
     await testarFonte(novaFonte, apiUrl);
   };

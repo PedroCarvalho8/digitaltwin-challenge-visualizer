@@ -1,6 +1,6 @@
 import React, { createContext, useState, ReactNode, useContext } from 'react';
 
-type Fonte = 'mock' | 'api' | 'localhost';
+export type Fonte = 'mock' | 'api' | 'localhost';
 
 interface DataSourceContextData {
   fonte: Fonte;

@@ -25,7 +25,6 @@ export default function SensorHistoricoScreen() {
         const sensores = await fetchData(fonte, urlPersonalizada);
         const encontrado = sensores?.find((s: Sensor) => s.sensor_id === id);
         if (encontrado) {
-          // Ordena da mais recente para mais antiga
           encontrado.medicoes.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
         }
         setSensor(encontrado ?? null);
