@@ -4,12 +4,12 @@ import { fetchData } from '@/services/fetchData';
 import Colors from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useEffect, useState } from 'react';
-import { Sensor } from '@/models/sensor';
+import { Reading } from '@/models/sensor';
 import { useDataSource } from '@/contexts/DataSourceContext';
 import { useRouter } from 'expo-router';
 
 export default function TabOneScreen() {
-  const [sensores, setSensores] = useState<Sensor[]>([]);
+  const [leituras, setLeituras] = useState<Reading[]>([]);
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? 'light'];
 
@@ -20,113 +20,89 @@ export default function TabOneScreen() {
     async function carregarDados() {
       try {
         const urlPersonalizada = fonte === 'api' && apiUrl.trim().length > 0 ? apiUrl.trim() : undefined;
-        const dados = await fetchData(fonte, urlPersonalizada);
-        setSensores(dados ?? []);
+        const dados = await fetchData(fonte, urlPersonalizada) ?? [];
+
+        const ultimasLeiturasMap = new Map<string, Reading>();
+
+        dados.forEach((item: Reading) => {
+          const atual = ultimasLeiturasMap.get(item.sensorId);
+          if (!atual) {
+            ultimasLeiturasMap.set(item.sensorId, item);
+          } else {
+            if (new Date(item.timestamp).getTime() > new Date(atual.timestamp).getTime()) {
+              ultimasLeiturasMap.set(item.sensorId, item);
+            }
+          }
+        });
+
+        const ultimasLeituras = Array.from(ultimasLeiturasMap.values());
+
+        ultimasLeituras.sort((a, b) => a.sensorId.localeCompare(b.sensorId));
+
+        setLeituras(ultimasLeituras);
       } catch (error) {
         console.error(error);
-        setSensores([]);
+        setLeituras([]);
       }
     }
 
     carregarDados();
   }, [fonte, apiUrl]);
 
-  const getIconName = (tipo: string) => {
-    switch (tipo) {
-      case 'sensor_pressao':
-        return 'tachometer';
-      case 'sensor_temperatura':
-        return 'thermometer-half';
-      case 'sensor_fluxo':
-        return 'exchange';
-      default:
-        return 'question';
-    }
-  };
-
-  const getDisplayName = (tipo: string) => {
-    switch (tipo) {
-      case 'sensor_pressao':
-        return 'Sensor de Pressão';
-      case 'sensor_temperatura':
-        return 'Sensor de Temperatura';
-      case 'sensor_fluxo':
-        return 'Sensor de Fluxo';
-      default:
-        return 'Tipo Desconhecido';
-    }
-  };
-
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.text }]}>Sensores</Text>
+      <Text style={[styles.title, { color: theme.text }]}>Leituras</Text>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {sensores.length === 0 ? (
+        {leituras.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Text style={[styles.emptyText, { color: theme.text }]}>
-              Nenhum dado encontrado.
+              Nenhuma leitura encontrada.
             </Text>
             <Text style={[styles.emptySubText, { color: theme.text }]}>
-              Verifique sua conexão ou vá até a tela de configurações para ajustar a fonte de dados.
+              Verifique sua conexão ou ajuste a fonte de dados nas configurações.
             </Text>
           </View>
         ) : (
-          sensores.map((item) => {
-            const ultimaMedicao = item.medicoes.reduce((max, atual) => {
-              return new Date(atual.timestamp) > new Date(max.timestamp) ? atual : max;
-            }, item.medicoes[0]);
+          leituras.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={[
+                styles.readingItem,
+                {
+                  backgroundColor: colorScheme === 'light' ? '#fff' : '#1c1c1e',
+                  shadowColor: theme.text,
+                },
+              ]}
+              onPress={() => router.push(`/sensor/${item.sensorId}`)}
+            >
+              <RNView style={styles.headerRow}>
+                <FontAwesome
+                  name="database"
+                  size={22}
+                  color={theme.tint}
+                  style={styles.icon}
+                />
+                <Text style={[styles.sensorTitle, { color: theme.text }]}>
+                  Sensor: {item.sensorId}
+                </Text>
+              </RNView>
 
-            return (
-              <TouchableOpacity
-                key={item.sensor_id}
-                style={[
-                  styles.sensorItem,
-                  {
-                    backgroundColor: colorScheme === 'light' ? '#fff' : '#1c1c1e',
-                    shadowColor: theme.text,
-                  },
-                ]}
-                onPress={() => router.push(`/sensor/${item.sensor_id}`)}
-              >
-                <RNView style={styles.headerRow}>
-                  <FontAwesome
-                    name={getIconName(item.tipo)}
-                    size={22}
-                    color={theme.tint}
-                    style={styles.icon}
-                  />
-                  <Text style={[styles.sensorTitle, { color: theme.text }]}>
-                    {getDisplayName(item.tipo)}
-                  </Text>
-                </RNView>
+              <View style={styles.details}>
+                <Text style={[styles.label, { color: theme.tint }]}>Valor:</Text>
+                <Text style={[styles.value, { color: theme.text }]}>
+                  {item.readingValue}
+                </Text>
+              </View>
 
-                <View style={styles.details}>
-                  <Text style={[styles.label, { color: theme.tint }]}>ID:</Text>
-                  <Text style={[styles.value, { color: theme.text }]}>{item.sensor_id}</Text>
-                </View>
-
-                <View style={styles.details}>
-                  <Text style={[styles.label, { color: theme.tint }]}>Localização:</Text>
-                  <Text style={[styles.value, { color: theme.text }]}>{item.localizacao}</Text>
-                </View>
-
-                <View style={styles.details}>
-                  <Text style={[styles.label, { color: theme.tint }]}>Última Medição:</Text>
-                  <Text style={[styles.value, { color: theme.text }]}>
-                    {ultimaMedicao.valor} {ultimaMedicao.unidade}
-                  </Text>
-                </View>
-
-                <View style={styles.details}>
-                  <Text style={[styles.label, { color: theme.tint }]}>Timestamp:</Text>
-                  <Text style={[styles.value, { color: theme.text }]}>
-                    {new Date(ultimaMedicao.timestamp).toLocaleString()}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })
+              <View style={styles.details}>
+                <Text style={[styles.label, { color: theme.tint }]}>Timestamp:</Text>
+                <Text style={[styles.value, { color: theme.text }]}>
+                  {new Date(item.timestamp).toLocaleString()}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))
         )}
       </ScrollView>
     </View>
@@ -147,7 +123,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 30,
   },
-  sensorItem: {
+  readingItem: {
     padding: 16,
     borderRadius: 12,
     marginBottom: 16,

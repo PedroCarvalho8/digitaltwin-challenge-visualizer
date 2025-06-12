@@ -1,67 +1,38 @@
 [
   {
-    "sensor_id": "P001",
-    "tipo": "sensor_pressao",
-    "localizacao": "Compressor_Principal",
-    "medicoes": [
-      {
-        "timestamp": "2025-06-11T10:00:00Z",
-        "valor": 6.8,
-        "unidade": "bar"
-      }
-    ]
+    "id": 1,
+    "sensorId": "P001",
+    "readingValue": 6.8,
+    "timestamp": "2025-06-11T10:00:00"
   },
   {
-    "sensor_id": "P002",
-    "tipo": "sensor_pressao",
-    "localizacao": "Linha_Entrada_Tanque",
-    "medicoes": [
-      {
-        "timestamp": "2025-06-11T10:05:00Z",
-        "valor": 7.2,
-        "unidade": "bar"
-      }
-    ]
+    "id": 2,
+    "sensorId": "P002",
+    "readingValue": 7.2,
+    "timestamp": "2025-06-11T10:05:00"
   },
   {
-    "sensor_id": "P003",
-    "tipo": "sensor_pressao",
-    "localizacao": "Valvula_Saida",
-    "medicoes": [
-      {
-        "timestamp": "2025-06-11T10:10:00Z",
-        "valor": 5.5,
-        "unidade": "bar"
-      },
-      {
-        "timestamp": "2025-06-11T10:15:00Z",
-        "valor": 5.7,
-        "unidade": "bar"
-      }
-    ]
+    "id": 3,
+    "sensorId": "P003",
+    "readingValue": 5.5,
+    "timestamp": "2025-06-11T10:10:00"
   },
   {
-    "sensor_id": "T001",
-    "tipo": "sensor_temperatura",
-    "localizacao": "Cilindro_Pneumatico",
-    "medicoes": [
-      {
-        "timestamp": "2025-06-11T10:00:00Z",
-        "valor": 38.5,
-        "unidade": "°C"
-      }
-    ]
+    "id": 4,
+    "sensorId": "P003",
+    "readingValue": 5.7,
+    "timestamp": "2025-06-11T10:15:00"
   },
   {
-    "sensor_id": "F001",
-    "tipo": "sensor_fluxo",
-    "localizacao": "Linha_Distribuicao_A",
-    "medicoes": [
-      {
-        "timestamp": "2025-06-11T10:00:00Z",
-        "valor": 12.3,
-        "unidade": "L/min"
-      }
-    ]
+    "id": 5,
+    "sensorId": "T001",
+    "readingValue": 38.5,
+    "timestamp": "2025-06-11T10:00:00"
+  },
+  {
+    "id": 6,
+    "sensorId": "F001",
+    "readingValue": 12.3,
+    "timestamp": "2025-06-11T10:00:00"
   }
 ]
