@@ -16,12 +16,10 @@ export default function ConfiguracoesScreen() {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const fontes: Fonte[] = ['mock', 'api', 'localhost'];
+  const fontes: Fonte[] = ['localhost', 'api'];
 
   const getDisplayName = (fonte: Fonte) => {
     switch (fonte) {
-      case 'mock':
-        return 'Mock (dados locais)';
       case 'api':
         return 'API Remota';
       case 'localhost':
@@ -34,15 +32,14 @@ export default function ConfiguracoesScreen() {
   const testarFonte = async (novaFonte: Fonte, url?: string) => {
     setErrorMessage(null);
     try {
-      let testUrl = '';
-      if (novaFonte === 'api') {
-        if (!url) throw new Error('URL da API remota não informada');
-        testUrl = url;
-      } else if (novaFonte === 'localhost') {
-        testUrl = 'http://localhost:3000';
-      } else {
-        return;
+      const testUrl = novaFonte === 'api' 
+        ? (url || '') 
+        : 'http://localhost:8080/api/readings';
+
+      if (novaFonte === 'api' && !url) {
+        throw new Error('URL da API remota não informada');
       }
+
       const response = await fetch(testUrl);
       if (!response.ok) throw new Error(`Erro na resposta: ${response.status}`);
     } catch (error: any) {

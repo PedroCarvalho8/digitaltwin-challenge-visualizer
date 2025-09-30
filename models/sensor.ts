@@ -4,3 +4,11 @@ export type Reading = {
   readingValue: number;
   timestamp: string;
 };
+
+export type NewReading = {
+  sensorId: string;
+  readingValue: number;
+  timestamp: string;
+};
+
+export type CreateReadingRequest = Omit<Reading, 'id'>;

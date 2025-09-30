@@ -26,7 +26,7 @@ export default function InicioScreen() {
   const [leituras, setLeituras] = useState<Reading[]>([]);
   const theme = Colors.light;
 
-  const { fonte, apiUrl } = useDataSource();
+  const { fonte, apiUrl, refreshTrigger } = useDataSource();
   const router = useRouter();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function InicioScreen() {
     }
 
     carregarDados();
-  }, [fonte, apiUrl]);
+  }, [fonte, apiUrl, refreshTrigger]);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>

@@ -23,7 +23,7 @@ export default function SensorHistoricoScreen() {
   const [readings, setReadings] = useState<Reading[]>([]);
   const [loading, setLoading] = useState(true);
   const theme = Colors.light;
-  const { fonte, apiUrl } = useDataSource();
+  const { fonte, apiUrl, refreshTrigger } = useDataSource();
   const navigation = useNavigation();
 
  useEffect(() => {
@@ -66,7 +66,7 @@ export default function SensorHistoricoScreen() {
       console.warn('sensorId indefinido nos params');
       setLoading(false);
     }
-  }, [sensorId, fonte, apiUrl, navigation, theme]);
+  }, [sensorId, fonte, apiUrl, navigation, theme, refreshTrigger]);
 
   if (loading)
     return (

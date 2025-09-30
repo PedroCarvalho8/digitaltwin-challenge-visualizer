@@ -60,7 +60,14 @@ export default function TabLayout() {
         name="inicio"
         options={{
           title: 'Início',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="adicionar"
+        options={{
+          title: 'Adicionar',
+          tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />,
         }}
       />
       <Tabs.Screen
