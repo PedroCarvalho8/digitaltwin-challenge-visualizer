@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   ScrollView,
-  useColorScheme,
   View as RNView,
   Pressable,
   TextInput,
@@ -13,8 +12,7 @@ import { useDataSource, Fonte } from '@/contexts/DataSourceContext';
 
 export default function ConfiguracoesScreen() {
   const { fonte, apiUrl, setFonte, setApiUrl } = useDataSource();
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors.light;
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -81,11 +79,10 @@ export default function ConfiguracoesScreen() {
               style={[
                 styles.item,
                 selecionado
-                  ? styles.selectedItemBackground
+                  ? { backgroundColor: theme.accent, shadowColor: theme.cardShadow }
                   : {
-                      backgroundColor:
-                        colorScheme === 'light' ? '#fff' : '#1c1c1e',
-                      shadowColor: theme.text,
+                      backgroundColor: theme.card,
+                      shadowColor: theme.cardShadow,
                     },
               ]}
             >
@@ -114,14 +111,13 @@ export default function ConfiguracoesScreen() {
               style={[
                 styles.textInput,
                 {
-                  backgroundColor:
-                    colorScheme === 'light' ? '#fff' : '#2c2c2e',
+                  backgroundColor: theme.card,
                   color: theme.text,
-                  borderColor: theme.tint,
+                  borderColor: theme.border,
                 },
               ]}
               placeholder="https://exemplo.com/api"
-              placeholderTextColor={colorScheme === 'light' ? '#999' : '#777'}
+              placeholderTextColor={theme.placeholder}
               value={apiUrl}
               onChangeText={handleSetApiUrl}
               autoCapitalize="none"
@@ -132,7 +128,7 @@ export default function ConfiguracoesScreen() {
         )}
 
         {errorMessage && (
-          <Text style={[styles.errorText, { color: 'red', marginTop: 10 }]}>
+          <Text style={[styles.errorText, { color: theme.error, marginTop: 10 }]}>
             {errorMessage}
           </Text>
         )}
@@ -172,11 +168,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-  selectedItemBackground: {
-    backgroundColor: '#155abc',
-  },
   selectedItemText: {
-    color: '#fff',
+    color: '#FFFFFF',
+    fontWeight: '700',
   },
   inputContainer: {
     marginTop: 8,

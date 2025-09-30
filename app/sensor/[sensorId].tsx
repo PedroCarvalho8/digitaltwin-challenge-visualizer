@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
-  useColorScheme,
 } from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import Colors from '@/constants/Colors';
@@ -23,8 +22,7 @@ export default function SensorHistoricoScreen() {
   const { sensorId } = useLocalSearchParams<{ sensorId: string }>();
   const [readings, setReadings] = useState<Reading[]>([]);
   const [loading, setLoading] = useState(true);
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors.light;
   const { fonte, apiUrl } = useDataSource();
   const navigation = useNavigation();
 
@@ -54,12 +52,21 @@ export default function SensorHistoricoScreen() {
 
     if (sensorId) {
       carregarHistorico();
-      navigation.setOptions({ title: `Histórico Sensor ${sensorId}` });
+      navigation.setOptions({ 
+        title: `Histórico Sensor ${sensorId}`,
+        headerStyle: {
+          backgroundColor: theme.card,
+        },
+        headerTintColor: theme.text,
+        headerTitleStyle: {
+          fontWeight: '700',
+        },
+      });
     } else {
       console.warn('sensorId indefinido nos params');
       setLoading(false);
     }
-  }, [sensorId, fonte, apiUrl, navigation]);
+  }, [sensorId, fonte, apiUrl, navigation, theme]);
 
   if (loading)
     return (
@@ -81,8 +88,8 @@ export default function SensorHistoricoScreen() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
       {readings.map((reading) => (
-        <View key={`${reading.id}`} style={[styles.item, { backgroundColor: theme.background }]}>
-          <Text style={[styles.timestamp, { color: theme.text }]}>
+        <View key={`${reading.id}`} style={[styles.item, { backgroundColor: theme.card, borderColor: theme.border }]}>
+          <Text style={[styles.timestamp, { color: theme.tint }]}>
             {new Date(reading.timestamp).toLocaleString()}
           </Text>
           <Text style={[styles.valor, { color: theme.text }]}>
@@ -98,12 +105,15 @@ const styles = StyleSheet.create({
   container: { flex: 1, paddingTop: 20, paddingHorizontal: 12 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   item: {
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 10,
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  timestamp: { fontSize: 14, fontWeight: '600' },
-  valor: { fontSize: 16, marginTop: 4 },
+  timestamp: { fontSize: 14, fontWeight: '600', marginBottom: 4 },
+  valor: { fontSize: 18, fontWeight: '700' },
 });

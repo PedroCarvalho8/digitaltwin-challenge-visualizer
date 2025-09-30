@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, useColorScheme, View as RNView, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, View as RNView, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { fetchData } from '@/services/fetchData';
 import Colors from '@/constants/Colors';
@@ -24,8 +24,7 @@ function getSensorName(sensorId: string): string {
 
 export default function InicioScreen() {
   const [leituras, setLeituras] = useState<Reading[]>([]);
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors.light;
 
   const { fonte, apiUrl } = useDataSource();
   const router = useRouter();
@@ -69,14 +68,14 @@ export default function InicioScreen() {
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {leituras.length === 0 ? (
-          <View style={styles.emptyContainer}>
+          <RNView style={styles.emptyContainer}>
             <Text style={[styles.emptyText, { color: theme.text }]}>
               Nenhuma leitura encontrada.
             </Text>
             <Text style={[styles.emptySubText, { color: theme.text }]}>
               Verifique sua conexão ou ajuste a fonte de dados nas configurações.
             </Text>
-          </View>
+          </RNView>
         ) : (
           leituras.map((item) => (
             <TouchableOpacity
@@ -84,8 +83,8 @@ export default function InicioScreen() {
               style={[
                 styles.readingItem,
                 {
-                  backgroundColor: colorScheme === 'light' ? '#fff' : '#1c1c1e',
-                  shadowColor: theme.text,
+                  backgroundColor: theme.card,
+                  shadowColor: theme.cardShadow,
                 },
               ]}
               onPress={() => router.push(`/sensor/${item.sensorId}`)}
@@ -102,19 +101,19 @@ export default function InicioScreen() {
                 </Text>
               </RNView>
 
-              <View style={styles.details}>
+              <RNView style={styles.details}>
                 <Text style={[styles.label, { color: theme.tint }]}>Valor:</Text>
                 <Text style={[styles.value, { color: theme.text }]}>
                   {item.readingValue}
                 </Text>
-              </View>
+              </RNView>
 
-              <View style={styles.details}>
+              <RNView style={styles.details}>
                 <Text style={[styles.label, { color: theme.tint }]}>Timestamp:</Text>
                 <Text style={[styles.value, { color: theme.text }]}>
                   {new Date(item.timestamp).toLocaleString()}
                 </Text>
-              </View>
+              </RNView>
             </TouchableOpacity>
           ))
         )}
@@ -186,6 +185,6 @@ const styles = StyleSheet.create({
   emptySubText: {
     fontSize: 14,
     textAlign: 'center',
-    color: '#999',
+    opacity: 0.6,
   },
 });
