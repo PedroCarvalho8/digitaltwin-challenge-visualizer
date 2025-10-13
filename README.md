@@ -276,6 +276,43 @@ curl http://localhost:8080/api/readings
 
 ---
 
+## 📸 Screenshots da Aplicação
+
+### Tela de Configurações
+Configure a fonte de dados e URL da API.
+
+![Tela de Configurações](exemplos_chamadas/Tela%20de%20configurações.png)
+
+---
+
+### Tela de Leituras com GET
+Visualize todas as leituras obtidas via requisição GET para a API.
+
+![Tela de Leituras](exemplos_chamadas/Tela%20Leituras%20com%20chamada%20GET%20para%20a%20API.png)
+
+---
+
+### Tela de Cadastro de Leituras com POST
+Adicione novas leituras que são enviadas via POST para a API.
+
+![Tela de Cadastro](exemplos_chamadas/Tela%20de%20Cadastro%20de%20leituras%20com%20chamada%20POST%20para%20a%20API.png)
+
+---
+
+### Tela de Histórico de Leituras
+Visualize o histórico completo de um sensor com gráfico de evolução.
+
+![Tela de Histórico](exemplos_chamadas/Tela%20de%20histórico%20de%20leituras.png)
+
+---
+
+### Exemplo de Chamada POST
+Requisição POST sendo enviada para o backend.
+
+![Chamada POST](exemplos_chamadas/Chamada%20POST.png)
+
+---
+
 ## 📦 Tecnologias Utilizadas
 
 ### Frontend
