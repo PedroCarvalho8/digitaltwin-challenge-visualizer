@@ -23,6 +23,38 @@ Por padrão, a aplicação roda na porta `8080`.
 
 ---
 
+## 🐳 Subir MySQL com Docker Compose
+
+Se preferir não instalar o MySQL localmente, você pode usar o `docker-compose` incluso:
+
+```bash
+docker compose up -d
+```
+
+Isso iniciará um container MySQL 8 na porta `3306` com:
+- Usuário root (senha: `root`)
+- Banco criado automaticamente: `readings_db`
+- Volume persistente: `mysql_data`
+
+Para verificar o status:
+
+```bash
+docker compose ps
+docker logs -f readings-mysql
+```
+
+Para parar/remover:
+
+```bash
+docker compose down
+# ou para limpar volumes também
+docker compose down -v
+```
+
+Com o banco no ar, rode a aplicação normalmente com `mvn spring-boot:run`. As tabelas serão criadas pelo Hibernate (`spring.jpa.hibernate.ddl-auto=update`).
+
+---
+
 ## 🗃️ Configuração do Banco de Dados MySQL
 
 ### 1. Instalação do MySQL

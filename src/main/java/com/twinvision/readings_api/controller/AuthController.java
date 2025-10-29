@@ -35,7 +35,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
+            String username = request.get("user name");
             String password = request.get("password");
             String email = request.get("email");
 
