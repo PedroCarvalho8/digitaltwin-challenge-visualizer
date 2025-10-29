@@ -12,10 +12,12 @@ import Colors from '@/constants/Colors';
 import { createReading } from '@/services/fetchData';
 import { NewReading } from '@/models/sensor';
 import { useDataSource } from '@/contexts/DataSourceContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function AddReadingForm() {
   const theme = Colors.light;
   const { fonte, apiUrl, notifyDataChanged } = useDataSource();
+  const { token } = useAuth();
   
   const [sensorId, setSensorId] = useState('');
   const [readingValue, setReadingValue] = useState('');
@@ -53,7 +55,7 @@ export default function AddReadingForm() {
 
       const urlPersonalizada = fonte === 'api' && apiUrl.trim().length > 0 ? apiUrl.trim() : undefined;
       
-      const createdReading = await createReading(newReading, fonte, urlPersonalizada);
+      const createdReading = await createReading(newReading, fonte, urlPersonalizada, token);
       
       setSuccessMessage(`Leitura criada com sucesso! ID: ${createdReading.id}`);
       

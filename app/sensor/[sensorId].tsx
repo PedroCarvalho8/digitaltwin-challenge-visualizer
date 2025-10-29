@@ -10,6 +10,7 @@ import {
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useDataSource } from '@/contexts/DataSourceContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { fetchData } from '@/services/fetchData';
 import { LineChart } from 'react-native-chart-kit';
 
@@ -39,6 +40,7 @@ export default function SensorHistoricoScreen() {
   const [loading, setLoading] = useState(true);
   const theme = Colors.light;
   const { fonte, apiUrl, refreshTrigger } = useDataSource();
+  const { token } = useAuth();
   const navigation = useNavigation();
   const screenWidth = Dimensions.get('window').width;
 
@@ -49,7 +51,7 @@ export default function SensorHistoricoScreen() {
         const urlPersonalizada =
           fonte === 'api' && apiUrl.trim().length > 0 ? apiUrl.trim() : undefined;
 
-        const dados: Reading[] = await fetchData(fonte, urlPersonalizada);
+        const dados: Reading[] = await fetchData(fonte, urlPersonalizada, token);
 
         const leiturasSensor = dados.filter((r) => r.sensorId === sensorId);
 
@@ -82,7 +84,7 @@ export default function SensorHistoricoScreen() {
       console.warn('sensorId indefinido nos params');
       setLoading(false);
     }
-  }, [sensorId, fonte, apiUrl, navigation, theme, refreshTrigger]);
+  }, [sensorId, fonte, apiUrl, navigation, theme, refreshTrigger, token]);
 
   // Preparar dados para o gráfico (ordem cronológica crescente)
   const chartData = useMemo(() => {

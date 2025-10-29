@@ -6,6 +6,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useEffect, useState } from 'react';
 import { Reading } from '@/models/sensor';
 import { useDataSource } from '@/contexts/DataSourceContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'expo-router';
 
 const sensorNamesMap: Record<string, string> = {
@@ -27,13 +28,14 @@ export default function InicioScreen() {
   const theme = Colors.light;
 
   const { fonte, apiUrl, refreshTrigger } = useDataSource();
+  const { token } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     async function carregarDados() {
       try {
         const urlPersonalizada = fonte === 'api' && apiUrl.trim().length > 0 ? apiUrl.trim() : undefined;
-        const dados = await fetchData(fonte, urlPersonalizada) ?? [];
+        const dados = await fetchData(fonte, urlPersonalizada, token) ?? [];
 
         const ultimasLeiturasMap = new Map<string, Reading>();
 
@@ -60,7 +62,7 @@ export default function InicioScreen() {
     }
 
     carregarDados();
-  }, [fonte, apiUrl, refreshTrigger]);
+  }, [fonte, apiUrl, refreshTrigger, token]);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>

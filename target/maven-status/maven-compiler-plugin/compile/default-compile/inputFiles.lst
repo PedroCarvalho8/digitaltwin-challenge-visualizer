@@ -1,0 +1,12 @@
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\config\SecurityConfig.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\controller\AuthController.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\controller\ReadingController.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\filter\JwtAuthenticationFilter.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\model\Reading.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\model\User.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\ReadingsApiApplication.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\repository\ReadingRepository.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\repository\UserRepository.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\service\ReadingService.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\service\UserService.java
+C:\Users\pedro\Documents\Repositorios\digitaltwin-challenge-visualizer\src\main\java\com\twinvision\readings_api\util\JwtUtil.java

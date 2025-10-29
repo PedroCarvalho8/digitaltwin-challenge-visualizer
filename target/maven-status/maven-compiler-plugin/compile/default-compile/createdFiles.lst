@@ -1,0 +1,12 @@
+com\twinvision\readings_api\controller\AuthController.class
+com\twinvision\readings_api\service\ReadingService.class
+com\twinvision\readings_api\ReadingsApiApplication.class
+com\twinvision\readings_api\model\Reading.class
+com\twinvision\readings_api\util\JwtUtil.class
+com\twinvision\readings_api\controller\ReadingController.class
+com\twinvision\readings_api\model\User.class
+com\twinvision\readings_api\filter\JwtAuthenticationFilter.class
+com\twinvision\readings_api\repository\ReadingRepository.class
+com\twinvision\readings_api\repository\UserRepository.class
+com\twinvision\readings_api\service\UserService.class
+com\twinvision\readings_api\config\SecurityConfig.class

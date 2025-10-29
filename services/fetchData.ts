@@ -2,7 +2,11 @@ import { Reading, NewReading } from '@/models/sensor';
 
 type Fonte = 'api' | 'localhost';
 
-export async function fetchData(fonte: Fonte = 'localhost', urlPersonalizada?: string) {
+export async function fetchData(
+  fonte: Fonte = 'localhost', 
+  urlPersonalizada?: string,
+  token?: string | null
+) {
   const url =
     urlPersonalizada ||
     (fonte === 'api'
@@ -10,7 +14,16 @@ export async function fetchData(fonte: Fonte = 'localhost', urlPersonalizada?: s
       : 'http://localhost:8080/api/readings');
 
   try {
-    const response = await fetch(url);
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, { headers });
     const data = await response.json();
 
     return data.map((item: any) => ({
@@ -27,7 +40,8 @@ export async function fetchData(fonte: Fonte = 'localhost', urlPersonalizada?: s
 export async function createReading(
   reading: NewReading,
   fonte: Fonte = 'localhost',
-  urlPersonalizada?: string
+  urlPersonalizada?: string,
+  token?: string | null
 ): Promise<Reading> {
   const url =
     urlPersonalizada ||
@@ -36,12 +50,18 @@ export async function createReading(
       : 'http://localhost:8080/api/readings');
 
   try {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+      headers,
       body: JSON.stringify(reading),
     });
 
@@ -67,10 +87,11 @@ export async function createReading(
 export async function createMultipleReadings(
   readings: NewReading[],
   fonte: Fonte = 'localhost',
-  urlPersonalizada?: string
+  urlPersonalizada?: string,
+  token?: string | null
 ): Promise<Reading[]> {
   const promises = readings.map(reading => 
-    createReading(reading, fonte, urlPersonalizada)
+    createReading(reading, fonte, urlPersonalizada, token)
   );
   
   try {

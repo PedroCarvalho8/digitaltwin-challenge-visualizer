@@ -9,7 +9,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'react-native';
 
 import { DataSourceProvider } from '@/contexts/DataSourceContext';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import Colors from '@/constants/Colors';
+import { usePathname, useRouter } from 'expo-router';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -69,32 +71,74 @@ function RootLayoutNav() {
         backgroundColor={Colors.light.card}
       />
       <DataSourceProvider>
-        <ThemeProvider value={CustomLightTheme}>
-          <Stack
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: Colors.light.card,
-              },
-              headerTintColor: Colors.light.text,
-              headerTitleStyle: {
-                fontWeight: '700',
-              },
-              headerShadowVisible: true,
-            }}
-          >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen 
-              name="modal" 
-              options={{ 
-                presentation: 'modal',
-                headerStyle: {
-                  backgroundColor: Colors.light.card,
-                },
-              }} 
-            />
-          </Stack>
-        </ThemeProvider>
+        <AuthProvider>
+          <AuthGuard>
+            <ThemeProvider value={CustomLightTheme}>
+              <Stack
+                screenOptions={{
+                  headerStyle: {
+                    backgroundColor: Colors.light.card,
+                  },
+                  headerTintColor: Colors.light.text,
+                  headerTitleStyle: {
+                    fontWeight: '700',
+                  },
+                  headerShadowVisible: true,
+                }}
+              >
+                <Stack.Screen 
+                  name="login" 
+                  options={{ 
+                    headerShown: false,
+                    gestureEnabled: false,
+                  }} 
+                />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen 
+                  name="modal" 
+                  options={{ 
+                    presentation: 'modal',
+                    headerStyle: {
+                      backgroundColor: Colors.light.card,
+                    },
+                  }} 
+                />
+              </Stack>
+            </ThemeProvider>
+          </AuthGuard>
+        </AuthProvider>
       </DataSourceProvider>
     </GestureHandlerRootView>
   );
+}
+
+function AuthGuard({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, isLoading } = useAuth();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading) {
+      // Se não está autenticado e não está na tela de login, redirecionar para login
+      if (!isAuthenticated && pathname !== '/login') {
+        router.replace('/login');
+      }
+      // Se está autenticado e está na tela de login, redirecionar para início
+      if (isAuthenticated && pathname === '/login') {
+        router.replace('/(tabs)/inicio');
+      }
+    }
+  }, [isAuthenticated, isLoading, pathname]);
+
+  // Mostrar nada enquanto carrega ou redireciona
+  if (isLoading) {
+    return null;
+  }
+
+  // Se não está autenticado e não está na tela de login, não renderizar nada (aguardar redirecionamento)
+  if (!isAuthenticated && pathname !== '/login') {
+    return null;
+  }
+
+  return <>{children}</>;
 }
