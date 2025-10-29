@@ -62,36 +62,145 @@ Ao executar a aplicação com `mvn spring-boot:run`, o Spring Boot automaticamen
 
 ---
 
-## 🌐 Endpoints disponíveis
+## 🔐 Autenticação JWT
 
-Base URL: `http://localhost:8080/api/readings`
+A API utiliza autenticação baseada em JWT (JSON Web Tokens) para proteger os endpoints.
 
-| Método | Endpoint                   | Descrição                               |
-|--------|----------------------------|-----------------------------------------|
-| GET    | `/api/readings`           | Lista todas as leituras                 |
-| GET    | `/api/readings/{sensorId}`| Filtra leituras por ID do sensor        |
-| POST   | `/api/readings`           | Salva uma nova leitura                  |
+### Endpoints de Autenticação
+
+| Método | Endpoint              | Descrição                                    |
+|--------|-----------------------|----------------------------------------------|
+| POST   | `/api/auth/register`  | Registra um novo usuário                     |
+| POST   | `/api/auth/login`     | Faz login e retorna um token JWT            |
+| GET    | `/api/auth/validate`  | Valida se um token é válido                 |
+
+### 📝 Como Usar
+
+#### 1. Registrar um novo usuário
+
+```bash
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "usuario123",
+    "password": "senhaSegura123",
+    "email": "usuario@exemplo.com"
+  }'
+```
+
+**Resposta:**
+```json
+{
+  "message": "Usuário criado com sucesso",
+  "username": "usuario123"
+}
+```
+
+#### 2. Fazer Login
+
+```bash
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "usuario123",
+    "password": "senhaSegura123"
+  }'
+```
+
+**Resposta:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "username": "usuario123",
+  "message": "Login realizado com sucesso"
+}
+```
+
+#### 3. Usar o Token em Requisições Protegidas
+
+Todos os endpoints de leituras (`/api/readings/**`) exigem autenticação.
+
+```bash
+# Obtenha o token do login e use no header Authorization
+curl -X GET http://localhost:8080/api/readings \
+  -H "Authorization: Bearer SEU_TOKEN_AQUI"
+```
 
 ---
 
-## 📦 Exemplo de requisição com `curl`
+## 🌐 Endpoints Protegidos
 
-### ▶️ POST /api/readings
+Base URL: `http://localhost:8080/api/readings`
+
+**⚠️ Todos os endpoints abaixo exigem autenticação JWT**
+
+| Método | Endpoint                   | Descrição                               | Autenticação |
+|--------|----------------------------|-----------------------------------------|--------------|
+| GET    | `/api/readings`           | Lista todas as leituras                 | ✅ Obrigatória |
+| GET    | `/api/readings/{sensorId}`| Filtra leituras por ID do sensor        | ✅ Obrigatória |
+| POST   | `/api/readings`           | Salva uma nova leitura                  | ✅ Obrigatória |
+
+---
+
+## 📦 Exemplos de Requisições com `curl`
+
+### 🔓 Autenticação (Público)
+
+#### Registrar Usuário
+```bash
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "usuario123",
+    "password": "senhaSegura123",
+    "email": "usuario@exemplo.com"
+  }'
+```
+
+#### Login
+```bash
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "usuario123",
+    "password": "senhaSegura123"
+  }'
+```
+
+### 🔒 Requisições Protegidas (Requerem Token)
+
+#### POST /api/readings
 
 ```bash
+# Primeiro, faça login e copie o token
+TOKEN="seu_token_aqui"
+
 curl -X POST http://localhost:8080/api/readings \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
   -d '{
     "sensorId": "P001",
     "readingValue": 78.5,
     "timestamp": "2025-06-12T14:30:00"
-}'
+  }'
 ```
 
-### ▶️ GET /api/readings
+#### GET /api/readings
 
 ```bash
-curl http://localhost:8080/api/readings
+TOKEN="seu_token_aqui"
+
+curl -X GET http://localhost:8080/api/readings \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+#### GET /api/readings/{sensorId}
+
+```bash
+TOKEN="seu_token_aqui"
+
+curl -X GET http://localhost:8080/api/readings/P001 \
+  -H "Authorization: Bearer $TOKEN"
 ```
 
 ---
