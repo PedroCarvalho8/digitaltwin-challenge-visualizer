@@ -128,12 +128,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   scrollContent: {
     paddingBottom: 30,

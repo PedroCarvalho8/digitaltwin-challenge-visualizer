@@ -246,8 +246,9 @@ export default function SensorHistoricoScreen() {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    paddingTop: 16, 
-    paddingHorizontal: 12 
+    paddingTop: 20, 
+    paddingHorizontal: 16,
+    paddingBottom: 30,
   },
   center: { 
     flex: 1, 
@@ -256,17 +257,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   chartSection: {
-    borderRadius: 16,
+    borderRadius: 12,
     padding: 16,
     marginBottom: 24,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
+    shadowRadius: 6,
     elevation: 4,
   },
   chartTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: 'bold',
     marginBottom: 16,
   },
   statsContainer: {
@@ -296,10 +297,10 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   listTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 12,
-    marginTop: 8,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginTop: 0,
   },
   item: {
     padding: 16,

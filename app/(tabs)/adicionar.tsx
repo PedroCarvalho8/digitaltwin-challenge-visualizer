@@ -31,13 +31,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 16,
+    opacity: 0.7,
   },
   scrollContent: {
     paddingBottom: 40,

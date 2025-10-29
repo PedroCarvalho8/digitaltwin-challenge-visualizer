@@ -181,18 +181,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 8,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   userInfo: {
     padding: 16,
@@ -262,9 +262,9 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 12,
     paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingVertical: 12,
     fontSize: 16,
   },
   errorText: {

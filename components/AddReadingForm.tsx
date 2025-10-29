@@ -165,10 +165,10 @@ export default function AddReadingForm() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 0,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
   },
@@ -182,18 +182,23 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 16,
+    marginBottom: 4,
   },
   button: {
-    borderRadius: 10,
+    borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 8,
     minHeight: 50,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonText: {
     color: '#FFFFFF',
@@ -202,7 +207,7 @@ const styles = StyleSheet.create({
   },
   messageBox: {
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 12,
     borderWidth: 1,
     marginTop: 8,
   },
@@ -212,8 +217,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   infoBox: {
-    padding: 10,
-    borderRadius: 8,
+    padding: 12,
+    borderRadius: 12,
     marginTop: 8,
   },
   infoText: {

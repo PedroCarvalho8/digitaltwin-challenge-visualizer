@@ -57,6 +57,13 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true)
       }}>
       <Tabs.Screen
+        name="dashboard"
+        options={{
+          title: 'Dashboard',
+          tabBarIcon: ({ color }) => <TabBarIcon name="bar-chart" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="inicio"
         options={{
           title: 'Início',
