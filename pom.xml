@@ -12,7 +12,7 @@
 	<artifactId>readings-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>readings-api</name>
-	<description>API para CRUD de leituras de sensores com banco H2</description>
+	<description>API para CRUD de leituras de sensores com banco MySQL</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -36,9 +36,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

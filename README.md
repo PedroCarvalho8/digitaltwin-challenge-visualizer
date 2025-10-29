@@ -6,6 +6,7 @@ Uma API REST desenvolvida com Spring Boot para armazenar e consultar leituras de
 
 - Java 17+
 - Maven 3.8+
+- MySQL 8.0+
 - (Opcional) Postman ou curl para testar os endpoints
 
 ---
@@ -22,20 +23,42 @@ Por padrão, a aplicação roda na porta `8080`.
 
 ---
 
-## 🗃️ Banco de dados H2
+## 🗃️ Configuração do Banco de Dados MySQL
 
-O banco de dados é armazenado localmente no seguinte caminho:
+### 1. Instalação do MySQL
 
+Certifique-se de ter o MySQL instalado e rodando em sua máquina local.
+
+### 2. Criação do Banco de Dados
+
+Execute o seguinte comando no terminal do MySQL ou use o MySQL Workbench:
+
+```bash
+# Via linha de comando
+mysql -u root -p < src/main/resources/schema.sql
+
+# Ou execute no terminal do MySQL
 ```
-./data/readings.mv.db
+
+Ou execute diretamente no MySQL:
+
+```sql
+CREATE DATABASE IF NOT EXISTS readings_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-Para acessar o console do H2:
+### 3. Configuração de Credenciais
 
-- Acesse: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-- JDBC URL: `jdbc:h2:file:./data/readings`
-- Usuário: `sa`
-- Senha: *(deixe em branco)*
+No arquivo `src/main/resources/application.properties`, ajuste as credenciais do MySQL se necessário:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/readings_db
+spring.datasource.username=root
+spring.datasource.password=root  # Altere para sua senha do MySQL
+```
+
+### 4. Execução
+
+Ao executar a aplicação com `mvn spring-boot:run`, o Spring Boot automaticamente criará as tabelas necessárias (devido à configuração `spring.jpa.hibernate.ddl-auto=update`).
 
 ---
 
